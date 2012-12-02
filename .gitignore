@@ -1,0 +1,22 @@
+*.class
+
+# Package Files
+*.jar
+*.war
+*.ear
+
+# Maven
+/target
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.classpath
+.project
+nbproject
+*.iml
+.idea
+*.sublime-project
+*.sublime-workspace
