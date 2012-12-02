@@ -1,6 +1,8 @@
 package com.tyzoid.jailr;
 
+import com.tyzoid.jailr.events.InteractionListener;
 import com.tyzoid.jailr.util.Log;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -33,7 +35,7 @@ public class JailrPlugin extends JavaPlugin {
     }
 
     public void loadEvents() {
-
+        Bukkit.getPluginManager().registerEvents(new InteractionListener(), this);
     }
 
     public void loadCommands() {

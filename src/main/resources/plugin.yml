@@ -23,6 +23,9 @@ permissions:
       jailr.list: true
       jailr.jailtime: true
       jailr.immune: true
+  jailr.quarantined:
+    description: Removes all ability for a player to interact in the world.
+    default: false
   jailr.jail:
     description: This player can jail people.
   jailr.unjail:
