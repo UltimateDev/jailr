@@ -59,7 +59,7 @@ public class DatabaseCommon {
     public static Map<String, Object> getDatabaseConfig() {
         Map<String, Object> config = new HashMap<String, Object>();
 
-        switch(getEngine()) {
+        switch (getEngine()) {
             case H2:
                 config.put("driver", JailrPlugin.getPlugin().getConfig().getString("database.driver"));
                 config.put("prefix", "");

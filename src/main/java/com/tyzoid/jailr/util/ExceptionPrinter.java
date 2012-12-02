@@ -23,7 +23,8 @@ public class ExceptionPrinter {
         printWriter.close();
         try {
             stringWriter.close();
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
 
         Log.severe("          ===== END SNIP HERE =====");
         System.out.println();
