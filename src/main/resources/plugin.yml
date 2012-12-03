@@ -1,6 +1,6 @@
 name: jailr
 version: 0.1
-authors: [Sushi, Tyzoid]
+authors: [Sushi, Tyzoid, messageofdeath]
 website: http://jailr.tyzoid.com/
 main: com.tyzoid.jailr.JailrPlugin
 softdepend: [Vault, PermissionsBukkit, bPermissions, zPermissions, PermissionsEX]
