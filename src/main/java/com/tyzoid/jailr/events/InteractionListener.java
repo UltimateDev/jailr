@@ -1,5 +1,6 @@
 package com.tyzoid.jailr.events;
 
+import com.tyzoid.jailr.api.JailAPI;
 import com.tyzoid.jailr.util.Messenger;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -24,7 +25,7 @@ public class InteractionListener implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
 
-        if (player.hasPermission(this.quarantined)) {
+        if (player.hasPermission(this.quarantined) || JailAPI.isJailed()) {
             Messenger.sendNoPermissionError(player);
             event.setCancelled(true);
         }
@@ -34,7 +35,7 @@ public class InteractionListener implements Listener {
     public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
 
-        if (player.hasPermission(this.quarantined)) {
+        if (player.hasPermission(this.quarantined) || JailAPI.isJailed()) {
             Messenger.sendNoPermissionError(player);
             event.setCancelled(true);
         }
@@ -44,7 +45,7 @@ public class InteractionListener implements Listener {
     public void onItemDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
 
-        if (player.hasPermission(this.quarantined)) {
+        if (player.hasPermission(this.quarantined) || JailAPI.isJailed()) {
             Messenger.sendNoPermissionError(player);
             event.setCancelled(true);
         }
@@ -54,7 +55,7 @@ public class InteractionListener implements Listener {
     public void onItemPickup(PlayerPickupItemEvent event) {
         Player player = event.getPlayer();
 
-        if (player.hasPermission(this.quarantined)) {
+        if (player.hasPermission(this.quarantined) || JailAPI.isJailed()) {
             Messenger.sendNoPermissionError(player);
             event.setCancelled(true);
         }
@@ -67,7 +68,7 @@ public class InteractionListener implements Listener {
         if (entity.getType() == EntityType.PLAYER) {
             Player player = (Player) event.getEntity();
 
-            if (player.hasPermission(this.quarantined)) {
+            if (player.hasPermission(this.quarantined) || JailAPI.isJailed()) {
                 Messenger.sendNoPermissionError(player);
                 event.setCancelled(true);
             }
