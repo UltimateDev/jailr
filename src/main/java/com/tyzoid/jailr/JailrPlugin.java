@@ -2,6 +2,7 @@ package com.tyzoid.jailr;
 
 import com.tyzoid.jailr.commands.CommandListener;
 import com.tyzoid.jailr.events.InteractionListener;
+import com.tyzoid.jailr.models.DatabaseRunner;
 import com.tyzoid.jailr.util.Log;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,12 +11,15 @@ import java.io.File;
 import java.io.IOException;
 
 public class JailrPlugin extends JavaPlugin {
+    DatabaseRunner runner;
     private static JailrPlugin plugin;
 
     @Override
     public void onEnable() {
         JailrPlugin.plugin = this;
 
+        this.runner = new DatabaseRunner();
+        this.runner.initDb();
         loadEvents();
         loadCommands();
         loadConfig();
