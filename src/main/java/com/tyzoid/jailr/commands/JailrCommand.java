@@ -21,7 +21,7 @@ public class JailrCommand {
         else if (cmd.argExists(0) && cmd.getArgs()[0].equalsIgnoreCase("about"))
             about(cmd);
         else
-            return false;
+            help(cmd);
         return true;
     }
 
@@ -42,7 +42,7 @@ public class JailrCommand {
     }
 
     private static void help(IssuedCommand cmd) {
-        String bull = ChatColor.GRAY + "  -";
+        String bull = ChatColor.GRAY + "  - ";
 
         Messenger.sendMessage(cmd.getSender(), "Available commands:");
         if (cmd.isPlayer()) {
@@ -74,6 +74,6 @@ public class JailrCommand {
 
     private static void about(IssuedCommand cmd) {
         Messenger.sendMessage(cmd.getSender(), "jailr v" + JailrPlugin.getPlugin().getDescription().getVersion() + " by goldblattster and Tyzoid");
-        Messenger.sendMessage(cmd.getSender(), "jailr is licensed under the BSD 2 clause license. Go to town.", false);
+        Messenger.sendMessage(cmd.getSender(), "jailr is licensed under the BSD 2 clause license. Go to town.");
     }
 }
