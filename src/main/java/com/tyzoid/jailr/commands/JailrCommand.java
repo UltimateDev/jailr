@@ -16,12 +16,18 @@ public class JailrCommand {
             setJailPoint(cmd);
         else if (cmd.argExists(0) && cmd.getArgs()[0].equalsIgnoreCase("setunjail"))
             setUnjailPoint(cmd);
-        else if (cmd.argExists(0) && cmd.getArgs()[0].equalsIgnoreCase("help"))
-            help(cmd);
         else if (cmd.argExists(0) && cmd.getArgs()[0].equalsIgnoreCase("about"))
             about(cmd);
+        else if (cmd.argExists(0) && cmd.getArgs()[0].equalsIgnoreCase("jail"))
+            unimplemented(cmd);
+        else if (cmd.argExists(0) && cmd.getArgs()[0].equalsIgnoreCase("unjail"))
+            unimplemented(cmd);
+        else if (cmd.argExists(0) && cmd.getArgs()[0].equalsIgnoreCase("list"))
+            unimplemented(cmd);
+        else if (cmd.argExists(0) && cmd.getArgs()[0].equalsIgnoreCase("jailtime"))
+            unimplemented(cmd);
         else
-            help(cmd);
+            help(cmd); // Also triggers on /jailr help
         return true;
     }
 
@@ -31,7 +37,7 @@ public class JailrCommand {
 
             if (player.hasPermission("jailr.setunjail")) {
                 JailAPI.setUnJailPoint(player.getLocation());
-                Messenger.sendMessage(cmd.getSender(), "The unjail point has been set to your location.");
+                Messenger.sendMessage(player, "The unjail point has been set to your location.");
             }
         } else {
             Messenger.sendError(cmd.getSender(), "You must be a player to use that command.");
@@ -49,6 +55,10 @@ public class JailrCommand {
         } else {
             Messenger.sendError(cmd.getSender(), "You must be a player to use that command.");
         }
+    }
+    
+    private static void unimplemented(IssuedCommand cmd){
+        Messenger.sendMessage(cmd.getSender(), "This command is unimplemented.");
     }
 
     private static void help(IssuedCommand cmd) {
