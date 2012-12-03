@@ -1,5 +1,6 @@
 package com.tyzoid.jailr;
 
+import com.tyzoid.jailr.commands.CommandListener;
 import com.tyzoid.jailr.events.InteractionListener;
 import com.tyzoid.jailr.util.Log;
 import org.bukkit.Bukkit;
@@ -18,7 +19,9 @@ public class JailrPlugin extends JavaPlugin {
         loadEvents();
         loadCommands();
         loadConfig();
-
+        
+        getCommand("jailr").setExecutor(new CommandListener(this));
+        
         try {
             Metrics metrics = new Metrics(this);
             metrics.start();
