@@ -27,7 +27,12 @@ public class JailrCommand {
 
     private static void setUnjailPoint(IssuedCommand cmd) {
         if (cmd.isPlayer()) {
-            JailAPI.setUnJailPoint(((Player) cmd.getSender()).getLocation());
+            Player player = (Player) cmd.getSender();
+
+            if (player.hasPermission("jailr.setunjail")) {
+                JailAPI.setUnJailPoint(player.getLocation());
+                Messenger.sendMessage(cmd.getSender(), "The unjail point has been set to your location.");
+            }
         } else {
             Messenger.sendError(cmd.getSender(), "You must be a player to use that command.");
         }
@@ -35,7 +40,12 @@ public class JailrCommand {
 
     private static void setJailPoint(IssuedCommand cmd) {
         if (cmd.isPlayer()) {
-            JailAPI.setJailPoint(((Player) cmd.getSender()).getLocation());
+            Player player = (Player) cmd.getSender();
+
+            if (player.hasPermission("jailr.setjail")) {
+                JailAPI.setJailPoint(player.getLocation());
+                Messenger.sendMessage(cmd.getSender(), "The jail point has been set to your location.");
+            }
         } else {
             Messenger.sendError(cmd.getSender(), "You must be a player to use that command.");
         }
