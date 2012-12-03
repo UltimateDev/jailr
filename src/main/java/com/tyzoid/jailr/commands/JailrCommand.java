@@ -13,9 +13,9 @@ import java.lang.String;
 public class JailrCommand {
     public static boolean issue(IssuedCommand cmd) {
         if (cmd.argExists(0) && cmd.getArgs()[0].equalsIgnoreCase("setjail"))
-            setUnjailPoint(cmd);
-        else if (cmd.argExists(0) && cmd.getArgs()[0].equalsIgnoreCase("setunjail"))
             setJailPoint(cmd);
+        else if (cmd.argExists(0) && cmd.getArgs()[0].equalsIgnoreCase("setunjail"))
+            setUnjailPoint(cmd);
         else if (cmd.argExists(0) && cmd.getArgs()[0].equalsIgnoreCase("help"))
             help(cmd);
         else if (cmd.argExists(0) && cmd.getArgs()[0].equalsIgnoreCase("about"))
