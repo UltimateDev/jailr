@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.tyzoid.jailr.models.Meta;
 import com.tyzoid.jailr.serialization.LocationSerializer;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 public class JailAPI {
     public static void setJailPoint(Location jailPoint) {
@@ -34,7 +35,7 @@ public class JailAPI {
     }
     
     //TODO Implement isJailed | Returns a boolean if the player is jailed
-    public static boolean isJailed() {
+    public static boolean isJailed(Player player) {
     	
     	return false;
     }
