@@ -23,13 +23,13 @@ public class JailAPI {
         unJailPointModel.save();
     }
     
-    //TODO Implement setJail | this is called after isJailed() is called and it is returned false | This jails a player
-    public static void setJail() {
+    //TODO Implement jailPlayer | this is called after isJailed() is called and it is returned false | This jails a player
+    public static void jailPlayer() {
     	
     }
     
-    //TODO Implement setUnJail | this is called after isJailed() is called and it is returned true | This unjails a player
-    public static void setUnJail() {
+    //TODO Implement unjailPlayer | this is called after isJailed() is called and it is returned true | This unjails a player
+    public static void unjailPlayer() {
     	
     }
     
