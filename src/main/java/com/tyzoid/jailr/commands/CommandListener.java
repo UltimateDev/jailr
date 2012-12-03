@@ -8,11 +8,11 @@ import com.tyzoid.jailr.JailrPlugin;
 
 public class CommandListener implements CommandExecutor {
     JailrPlugin plugin;
-    
+
     public CommandListener(JailrPlugin instance) {
         this.plugin = instance;
     }
-    
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         boolean success = false;
@@ -22,5 +22,5 @@ public class CommandListener implements CommandExecutor {
         }
         return success;
     }
-    
+
 }

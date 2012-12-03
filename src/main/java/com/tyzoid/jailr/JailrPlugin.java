@@ -19,9 +19,7 @@ public class JailrPlugin extends JavaPlugin {
         loadEvents();
         loadCommands();
         loadConfig();
-        
-        getCommand("jailr").setExecutor(new CommandListener(this));
-        
+
         try {
             Metrics metrics = new Metrics(this);
             metrics.start();
@@ -42,7 +40,7 @@ public class JailrPlugin extends JavaPlugin {
     }
 
     public void loadCommands() {
-
+        getCommand("jailr").setExecutor(new CommandListener(this));
     }
 
     public void loadConfig() {
