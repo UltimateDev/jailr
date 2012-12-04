@@ -7,8 +7,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import java.util.List;
-
 /**
  * Class that implements event handlers that prevent prisoners
  * from escaping jail.
@@ -20,7 +18,9 @@ public class WardenListener implements Listener {
     public void onSpawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         if (JailAPI.isJailed(player.getName())) {
-            player.teleport(JailAPI.getJailPoint());
+        	if(JailAPI.isJailPointSet()) {
+        		player.teleport(JailAPI.getJailPoint());
+        	}
         }
     }
 
@@ -28,7 +28,9 @@ public class WardenListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (JailAPI.isJailed(player.getName())) {
-            player.teleport(JailAPI.getJailPoint());
+        	if(JailAPI.isJailPointSet()) {
+        		player.teleport(JailAPI.getJailPoint());
+        	}
         }
     }
 }
