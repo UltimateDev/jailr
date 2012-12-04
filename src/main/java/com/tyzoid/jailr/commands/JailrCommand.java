@@ -19,19 +19,45 @@ public class JailrCommand {
                 setUnjailPoint(cmd);
             else if (cmd.getArgs()[0].equalsIgnoreCase("about"))
                 about(cmd);
+            else if (cmd.getArgs()[0].equalsIgnoreCase("list"))
+                unimplemented(cmd);
             else if (cmd.getArgs()[0].equalsIgnoreCase("jail"))
+            	wrongArgs(cmd);
+            else if (cmd.getArgs()[0].equalsIgnoreCase("unjail"))
+            	wrongArgs(cmd);
+            else if (cmd.getArgs()[0].equalsIgnoreCase("jailtime"))
+                wrongArgs(cmd);
+            else
+                help(cmd); // Also triggers on /jailr help
+    	}
+    	if(cmd.argExists(0) && cmd.argExists(1)) {
+    		if (cmd.getArgs()[0].equalsIgnoreCase("jail"))
                 unimplemented(cmd);
             else if (cmd.getArgs()[0].equalsIgnoreCase("unjail"))
-                unimplemented(cmd);
-            else if (cmd.getArgs()[0].equalsIgnoreCase("list"))
                 unimplemented(cmd);
             else if (cmd.getArgs()[0].equalsIgnoreCase("jailtime"))
                 unimplemented(cmd);
             else
-                help(cmd); // Also triggers on /jailr help
-    	}else
-    		help(cmd);
+            	help(cmd); // Also triggers on /jailr help
+    	}
         return true;
+    }
+    
+    private static void jailPlayer(IssuedCommand cmd) {
+    	
+    }
+    
+    private static void unjailPlayer(IssuedCommand cmd) {
+    	
+    }
+    
+    private static void listJailed(IssuedCommand cmd) {
+    	
+    }
+    
+    // The string prisoner is the prisoner being checked for the time left.
+    private static void getJailTime(IssuedCommand cmd, String prisoner) {
+    	
     }
 
     private static void setUnjailPoint(IssuedCommand cmd) {
@@ -60,7 +86,11 @@ public class JailrCommand {
         }
     }
     
-    private static void unimplemented(IssuedCommand cmd){
+    private static void wrongArgs(IssuedCommand cmd) {
+    	Messenger.sendMessage(cmd.getSender(), "Incorrect arguments!");
+    }
+    
+    private static void unimplemented(IssuedCommand cmd) {
         Messenger.sendMessage(cmd.getSender(), "This command is unimplemented.");
     }
 
