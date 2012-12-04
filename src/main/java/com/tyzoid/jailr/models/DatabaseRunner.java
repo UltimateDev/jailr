@@ -110,6 +110,7 @@ public class DatabaseRunner {
                         this.st = this.conn.createStatement();
                         this.st.executeUpdate("CREATE TABLE IF NOT EXISTS " + this.prefix + "prisoners (" +
                                 "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+                                "player VARCHAR(20)," +
                                 "created_time INT," +
                                 "sentence_time INT," +
                                 "served_time INT," +
@@ -209,6 +210,7 @@ public class DatabaseRunner {
                         this.st = this.conn.createStatement();
                         this.st.executeUpdate("CREATE TABLE IF NOT EXISTS " + this.prefix + "prisoners (" +
                                 "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+                                "player VARCHAR(20)," +
                                 "created_time INT," +
                                 "sentence_time INT," +
                                 "served_time INT," +

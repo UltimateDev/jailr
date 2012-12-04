@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Prisoner extends Model {
     int id;
+    String player;
     int created_time;
     int sentence_time;
     int served_time;
@@ -16,11 +17,12 @@ public class Prisoner extends Model {
     String usergroup;
     String inventory;
 
-    private Prisoner(int id, int created_time, int sentence_time, int served_time, String reason, String jailer, String usergroup, String inventory) {
+    private Prisoner(int id, String player, int created_time, int sentence_time, int served_time, String reason, String jailer, String usergroup, String inventory) {
         this.saved = true;
         this.tableName = this.config.get("prefix") + "prisoners";
 
         this.id = id;
+        this.player = player;
         this.created_time = created_time;
         this.sentence_time = sentence_time;
         this.served_time = served_time;
@@ -30,10 +32,11 @@ public class Prisoner extends Model {
         this.inventory = inventory;
     }
 
-    public Prisoner(int created_time, int sentence_time, int served_time, String reason, String jailer, String usergroup, String inventory) {
+    public Prisoner(int created_time, String player, int sentence_time, int served_time, String reason, String jailer, String usergroup, String inventory) {
         this.saved = false;
         this.tableName = this.config.get("prefix") + "prisoners";
 
+        this.player = player;
         this.created_time = created_time;
         this.sentence_time = sentence_time;
         this.served_time = served_time;
@@ -45,7 +48,7 @@ public class Prisoner extends Model {
 
     @Override
     public String toString() {
-        return String.format("#%s:%s:%s:%s:%s:%s", this.created_time, this.sentence_time, this.served_time, this.reason, this.jailer, this.inventory);
+        return String.format("#%s:%s:%s:%s:%s:%s:%s", this.created_time, this.player, this.sentence_time, this.served_time, this.reason, this.jailer, this.inventory);
     }
 
     public void save() {
@@ -91,14 +94,15 @@ public class Prisoner extends Model {
                 try {
                     if (!this.saved) {
                         this.conn = DatabaseCommon.getConnection();
-                        this.pst = this.conn.prepareStatement("INSERT INTO " + this.tableName + " (created_time, sentence_time, served_time, reason, jailer, usergroup, inventory) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                        this.pst.setInt(1, this.created_time);
-                        this.pst.setInt(2, this.sentence_time);
-                        this.pst.setInt(3, this.served_time);
-                        this.pst.setString(4, this.reason);
-                        this.pst.setString(5, this.jailer);
-                        this.pst.setString(6, this.usergroup);
-                        this.pst.setString(7, this.inventory);
+                        this.pst = this.conn.prepareStatement("INSERT INTO " + this.tableName + " (player, created_time, sentence_time, served_time, reason, jailer, usergroup, inventory) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                        this.pst.setString(1, this.player);
+                        this.pst.setInt(2, this.created_time);
+                        this.pst.setInt(3, this.sentence_time);
+                        this.pst.setInt(4, this.served_time);
+                        this.pst.setString(5, this.reason);
+                        this.pst.setString(6, this.jailer);
+                        this.pst.setString(7, this.usergroup);
+                        this.pst.setString(8, this.inventory);
 
                         this.pst.executeUpdate();
 
@@ -143,7 +147,7 @@ public class Prisoner extends Model {
                     rs = st.executeQuery("SELECT * FROM " + tableName);
 
                     while (rs.next()) {
-                        prisoners.add(new Prisoner(rs.getInt("created_time"), rs.getInt("sentence_time"), rs.getInt("served_time"), rs.getString("reason"), rs.getString("jailer"), rs.getString("usergroup"), rs.getString("inventory")));
+                        prisoners.add(new Prisoner(rs.getInt("id"), rs.getString("player"), rs.getInt("created_time"), rs.getInt("sentence_time"), rs.getInt("served_time"), rs.getString("reason"), rs.getString("jailer"), rs.getString("usergroup"), rs.getString("inventory")));
                     }
                 } catch (SQLException ex) {
                     ExceptionPrinter.printFriendlyStackTrace(ex);
@@ -172,7 +176,7 @@ public class Prisoner extends Model {
                     rs = st.executeQuery("SELECT * FROM " + tableName);
 
                     while (rs.next()) {
-                        prisoners.add(new Prisoner(rs.getInt("created_time"), rs.getInt("sentence_time"), rs.getInt("served_time"), rs.getString("reason"), rs.getString("jailer"), rs.getString("usergroup"), rs.getString("inventory")));
+                        prisoners.add(new Prisoner(rs.getInt("id"), rs.getString("player"), rs.getInt("created_time"), rs.getInt("sentence_time"), rs.getInt("served_time"), rs.getString("reason"), rs.getString("jailer"), rs.getString("usergroup"), rs.getString("inventory")));
                     }
                 } catch (SQLException ex) {
                     ExceptionPrinter.printFriendlyStackTrace(ex);
@@ -215,7 +219,7 @@ public class Prisoner extends Model {
                     rs = st.executeQuery("SELECT * FROM " + tableName + " WHERE " + where);
 
                     while (rs.next()) {
-                        prisoners.add(new Prisoner(rs.getInt("created_time"), rs.getInt("sentence_time"), rs.getInt("served_time"), rs.getString("reason"), rs.getString("jailer"), rs.getString("usergroup"), rs.getString("inventory")));
+                        prisoners.add(new Prisoner(rs.getInt("id"), rs.getString("player"), rs.getInt("created_time"), rs.getInt("sentence_time"), rs.getInt("served_time"), rs.getString("reason"), rs.getString("jailer"), rs.getString("usergroup"), rs.getString("inventory")));
                     }
                 } catch (SQLException ex) {
                     ExceptionPrinter.printFriendlyStackTrace(ex);
@@ -244,7 +248,7 @@ public class Prisoner extends Model {
                     rs = st.executeQuery("SELECT * FROM " + tableName + " WHERE " + where);
 
                     while (rs.next()) {
-                        prisoners.add(new Prisoner(rs.getInt("created_time"), rs.getInt("sentence_time"), rs.getInt("served_time"), rs.getString("reason"), rs.getString("jailer"), rs.getString("usergroup"), rs.getString("inventory")));
+                        prisoners.add(new Prisoner(rs.getInt("id"), rs.getString("player"), rs.getInt("created_time"), rs.getInt("sentence_time"), rs.getInt("served_time"), rs.getString("reason"), rs.getString("jailer"), rs.getString("usergroup"), rs.getString("inventory")));
                     }
                 } catch (SQLException ex) {
                     ExceptionPrinter.printFriendlyStackTrace(ex);
@@ -342,6 +346,14 @@ public class Prisoner extends Model {
 
     public int getId() {
         return id;
+    }
+
+    public String getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
     }
 
     public int getCreated_time() {
