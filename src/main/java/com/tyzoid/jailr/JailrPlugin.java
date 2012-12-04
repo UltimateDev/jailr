@@ -1,7 +1,9 @@
 package com.tyzoid.jailr;
 
 import com.tyzoid.jailr.commands.CommandListener;
+import com.tyzoid.jailr.events.FrozenListener;
 import com.tyzoid.jailr.events.InteractionListener;
+import com.tyzoid.jailr.events.WardenListener;
 import com.tyzoid.jailr.models.DatabaseRunner;
 import com.tyzoid.jailr.util.Log;
 import org.bukkit.Bukkit;
@@ -41,6 +43,8 @@ public class JailrPlugin extends JavaPlugin {
 
     public void loadEvents() {
         Bukkit.getPluginManager().registerEvents(new InteractionListener(), this);
+        Bukkit.getPluginManager().registerEvents(new WardenListener(), this);
+        Bukkit.getPluginManager().registerEvents(new FrozenListener(), this);
     }
 
     public void loadCommands() {
