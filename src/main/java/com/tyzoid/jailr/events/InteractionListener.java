@@ -16,16 +16,19 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.permissions.Permission;
 
+/**
+ * Class that implements event handlers that prevent interaction
+ * from quarantined players.
+ * 
+ * @author Sushi
+ */
 public class InteractionListener implements Listener {
-    Permission quarantined = new Permission("jailr.quarantined");
-
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
 
-        if (player.hasPermission(this.quarantined) || JailAPI.isJailed(player)) {
+        if (JailAPI.isQuarantined(player.getName())) {
             Messenger.sendNoPermissionError(player);
             event.setCancelled(true);
         }
@@ -35,7 +38,7 @@ public class InteractionListener implements Listener {
     public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
 
-        if (player.hasPermission(this.quarantined) || JailAPI.isJailed(player)) {
+        if (JailAPI.isQuarantined(player.getName())) {
             Messenger.sendNoPermissionError(player);
             event.setCancelled(true);
         }
@@ -45,7 +48,7 @@ public class InteractionListener implements Listener {
     public void onItemDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
 
-        if (player.hasPermission(this.quarantined) || JailAPI.isJailed(player)) {
+        if (JailAPI.isQuarantined(player.getName())) {
             Messenger.sendNoPermissionError(player);
             event.setCancelled(true);
         }
@@ -55,7 +58,7 @@ public class InteractionListener implements Listener {
     public void onItemPickup(PlayerPickupItemEvent event) {
         Player player = event.getPlayer();
 
-        if (player.hasPermission(this.quarantined) || JailAPI.isJailed(player)) {
+        if (JailAPI.isQuarantined(player.getName())) {
             Messenger.sendNoPermissionError(player);
             event.setCancelled(true);
         }
@@ -68,7 +71,7 @@ public class InteractionListener implements Listener {
         if (entity.getType() == EntityType.PLAYER) {
             Player player = (Player) event.getEntity();
 
-            if (player.hasPermission(this.quarantined) || JailAPI.isJailed(player)) {
+            if (JailAPI.isQuarantined(player.getName())) {
                 Messenger.sendNoPermissionError(player);
                 event.setCancelled(true);
             }
@@ -82,7 +85,7 @@ public class InteractionListener implements Listener {
         if (humanEntity.getType() == EntityType.PLAYER) {
             Player player = (Player) event.getPlayer();
 
-            if (player.hasPermission(this.quarantined)) {
+            if (JailAPI.isQuarantined(player.getName())) {
                 Messenger.sendNoPermissionError(player);
                 event.setCancelled(true);
             }
@@ -93,7 +96,7 @@ public class InteractionListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        if (player.hasPermission(this.quarantined)) {
+        if (JailAPI.isQuarantined(player.getName())) {
             Messenger.sendNoPermissionError(player);
             event.setCancelled(true);
         }
@@ -106,7 +109,7 @@ public class InteractionListener implements Listener {
         if (entity.getType() == EntityType.PLAYER) {
             Player player = (Player) event.getEntity();
 
-            if (player.hasPermission(this.quarantined)) {
+            if (JailAPI.isQuarantined(player.getName())) {
                 Messenger.sendNoPermissionError(player);
                 event.setCancelled(true);
             }
