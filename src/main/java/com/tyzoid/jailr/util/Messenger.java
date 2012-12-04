@@ -29,13 +29,9 @@ public class Messenger {
         if (sender == null) {
             throw new NullPointerException("I tried to send a message to a null CommandSender. Oops.");
         } else {
-            if (prefixed) {
-                String chatPrefix = ChatColor.GRAY + "[" + ChatColor.DARK_RED + JailrPlugin.getPlugin().getDescription().getName() + ChatColor.GRAY + "] "
-                        + ChatColor.RESET;
-                sender.sendMessage(chatPrefix + message);
-            } else {
-                sender.sendMessage(message);
-            }
+            String chatPrefix = ChatColor.GRAY + "[" + ChatColor.DARK_RED + JailrPlugin.getPlugin().getDescription().getName() + ChatColor.GRAY + "] "
+                    + ChatColor.RESET;
+            sender.sendMessage(prefixed ? chatPrefix + message : message);
         }
     }
 
