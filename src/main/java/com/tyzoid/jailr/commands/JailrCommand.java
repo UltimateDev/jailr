@@ -29,7 +29,8 @@ public class JailrCommand {
                 unimplemented(cmd);
             else
                 help(cmd); // Also triggers on /jailr help
-    	}
+    	}else
+    		help(cmd);
         return true;
     }
 
