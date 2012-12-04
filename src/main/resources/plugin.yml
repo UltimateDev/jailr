@@ -17,6 +17,7 @@ permissions:
     default: op
     children:
       jailr.quarantined: false
+      jailr.frozen: false
       jailr.jail: true
       jailr.unjail: true
       jailr.setjail: true
@@ -26,6 +27,9 @@ permissions:
       jailr.immune: true
   jailr.quarantined:
     description: Removes all ability for a player to interact in the world.
+    default: false
+  jailr.frozen:
+    description: Removes all ability for a player to move in the world. The player can still look.
     default: false
   jailr.jail:
     description: This player can jail people.
