@@ -1,6 +1,7 @@
 package com.tyzoid.jailr.api;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.tyzoid.jailr.models.Meta;
 import com.tyzoid.jailr.serialization.LocationSerializer;
@@ -22,6 +23,24 @@ public class JailAPI {
         Meta.removeWhere("key='unJailPoint'");
         Meta unJailPointModel = new Meta("unJailPoint", locationSerializer.getString());
         unJailPointModel.save();
+    }
+
+    public static Location getJailPoint() {
+        List<Meta> matches = Meta.selectWhere("key='jailPoint'");
+        if (matches.size() < 1) {
+            return null; // If there are no matches the jailPoint is not set
+        }
+
+        return (new LocationSerializer(Meta.selectWhere("key='jailPoint'").get(0).getValue())).getLocation();
+    }
+
+    public static Location getUnJailPoint() {
+        List<Meta> matches = Meta.selectWhere("key='unJailPoint'");
+        if (matches.size() < 1) {
+            return null; // If there are no matches the unJailPoint is not set
+        }
+
+        return (new LocationSerializer(Meta.selectWhere("key='unJailPoint'").get(0).getValue())).getLocation();
     }
     
     //TODO Implement jailPlayer | this is called after isJailed() is called and it is returned false | This jails a player

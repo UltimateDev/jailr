@@ -16,6 +16,7 @@ permissions:
     description: This player has full access to jailr.
     default: op
     children:
+      jailr.quarantined: false
       jailr.jail: true
       jailr.unjail: true
       jailr.setjail: true
