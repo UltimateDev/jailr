@@ -43,11 +43,11 @@ public class JailrCommand {
         return true;
     }
     
-    private static void jailPlayer(IssuedCommand cmd) {
+    private static void jailPlayer(IssuedCommand cmd, String prisoner) {
     	
     }
     
-    private static void unjailPlayer(IssuedCommand cmd) {
+    private static void unjailPlayer(IssuedCommand cmd, String prisoner) {
     	
     }
     
