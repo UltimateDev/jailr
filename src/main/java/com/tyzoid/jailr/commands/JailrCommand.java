@@ -12,7 +12,7 @@ import java.lang.String;
 
 public class JailrCommand {
     public static boolean issue(IssuedCommand cmd) {
-    	if(cmd.argExists(0)) {
+    	if(cmd.argExists(0) && !cmd.argExists(1)) {
     		if (cmd.getArgs()[0].equalsIgnoreCase("setjail"))
                 setJailPoint(cmd);
             else if (cmd.getArgs()[0].equalsIgnoreCase("setunjail"))
