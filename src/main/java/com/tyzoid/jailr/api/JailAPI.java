@@ -186,8 +186,10 @@ public class JailAPI {
     //TODO Implement unjailPlayer | this is called after isJailed() is called and it is returned true | This unjails a player
     public static void unjailPlayer(String name) {
     	Prisoner.removeWhere("player='"+name+"'");
-    	Player player = Bukkit.getServer().getPlayer(name);
-        player.teleport(JailAPI.getUnJailPoint());
+    	if(Bukkit.getServer().getPlayer(name) != null) {
+    		Player player = Bukkit.getServer().getPlayer(name);
+    		player.teleport(JailAPI.getUnJailPoint());
+    	}
     }
     
     public static String formatArgs(String[] args) {
