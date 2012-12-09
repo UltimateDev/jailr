@@ -32,23 +32,34 @@ public class JailrCommand {
     	}
     	if(cmd.argExists(0) && cmd.argExists(1)) {
     		if (cmd.getArgs()[0].equalsIgnoreCase("jail"))
-                unimplemented(cmd);
+                jailPlayer(cmd, cmd.getArgs()[1]);
             else if (cmd.getArgs()[0].equalsIgnoreCase("unjail"))
-                unimplemented(cmd);
+            	unjailPlayer(cmd, cmd.getArgs()[1]);
             else if (cmd.getArgs()[0].equalsIgnoreCase("jailtime"))
                 unimplemented(cmd);
             else
             	help(cmd); // Also triggers on /jailr help
-    	}
+    	}else
+    		help(cmd);
         return true;
     }
     
     private static void jailPlayer(IssuedCommand cmd, String prisoner) {
-    	
+    	if(!JailAPI.isJailed(prisoner)) {
+    		JailAPI.jailPlayer(prisoner);
+    		Messenger.sendMessage(cmd.getSender(), "That player is now jailed!");
+    	}else{
+    		Messenger.sendMessage(cmd.getSender(), "That player is already jailed!");
+    	}
     }
     
     private static void unjailPlayer(IssuedCommand cmd, String prisoner) {
-    	
+    	if(!JailAPI.isJailed(prisoner)) {
+    		JailAPI.unjailPlayer(prisoner);
+    		Messenger.sendMessage(cmd.getSender(), "That player is now unjailed!");
+    	}else{
+    		Messenger.sendMessage(cmd.getSender(), "That player is not jailed!");
+    	}
     }
     
     private static void listJailed(IssuedCommand cmd) {

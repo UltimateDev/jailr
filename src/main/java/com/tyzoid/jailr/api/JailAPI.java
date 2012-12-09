@@ -157,13 +157,18 @@ public class JailAPI {
     }
 
     //TODO Implement jailPlayer | this is called after isJailed() is called and it is returned false | This jails a player
-    public static void jailPlayer() {
-    	
+    public static void jailPlayer(String name) {
+    	Meta jailPlayer = new Meta("Prisoner", name);
+        jailPlayer.save();
+        Player player = Bukkit.getServer().getPlayer(name);
+        player.teleport(JailAPI.getJailPoint());
     }
 
     //TODO Implement unjailPlayer | this is called after isJailed() is called and it is returned true | This unjails a player
-    public static void unjailPlayer() {
-    	
+    public static void unjailPlayer(String name) {
+    	Prisoner.removeWhere("player='"+name+"'");
+    	 Player player = Bukkit.getServer().getPlayer(name);
+         player.teleport(JailAPI.getUnJailPoint());
     }
 
     /**
