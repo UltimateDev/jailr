@@ -1,6 +1,7 @@
 package com.tyzoid.jailr.events;
 
 import com.tyzoid.jailr.api.JailAPI;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,17 +18,14 @@ public class FrozenListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-
         if (JailAPI.isFrozen(player.getName())) {
-            Location from = event.getFrom();
-            Location to = event.getTo();
-
-            if (to.getX() == from.getX() &&
-                    to.getZ() == from.getZ() &&
-                    to.getY() == from.getY() &&
-                    to.getWorld().getName().equals(from.getWorld().getName())) return;
-
-            event.setCancelled(true);
+        	if(event.getFrom().getX() != event.getTo().getX() || event.getFrom().getY() != event.getTo().getY() || event.getFrom().getZ() != event.getTo().getZ())
+			{
+				Location loc = event.getFrom();
+				loc.setPitch(event.getTo().getPitch());
+				loc.setYaw(event.getTo().getYaw());
+				event.getPlayer().teleport(loc);
+			}
         }
     }
 }
