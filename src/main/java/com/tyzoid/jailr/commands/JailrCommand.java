@@ -55,7 +55,7 @@ public class JailrCommand {
     
     private static void jailPlayer(IssuedCommand cmd, String prisoner, String reason) {
     	if(!JailAPI.isJailed(prisoner)) {
-    		if(prisoner.equalsIgnoreCase(cmd.getSender().getName())) {
+    		if(!prisoner.equalsIgnoreCase(cmd.getSender().getName())) {
     			JailAPI.jailPlayer(prisoner, cmd.getSender().getName(), reason, "usergroup", "InventorySerializer");
     			Messenger.sendMessage(cmd.getSender(), "That player is now jailed!");
     		}else{
@@ -68,7 +68,7 @@ public class JailrCommand {
     
     private static void unjailPlayer(IssuedCommand cmd, String prisoner) {
     	if(JailAPI.isJailed(prisoner)) {
-    		if(prisoner.equalsIgnoreCase(cmd.getSender().getName())) {
+    		if(!prisoner.equalsIgnoreCase(cmd.getSender().getName())) {
     			JailAPI.unjailPlayer(prisoner);
         		Messenger.sendMessage(cmd.getSender(), "That player is now unjailed!");
     		}else{
