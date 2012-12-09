@@ -131,6 +131,9 @@ public class JailAPI {
             return isJailed(player) && JailrPlugin.getPlugin().getConfig().getBoolean("auto-quarantine");
         } else {
             Player playerObject = Bukkit.getPlayer(player);
+            if(playerObject.isOp()) {
+            	return false;
+            }
             return playerObject.hasPermission("jailr.quarantine") || isJailed(player) && JailrPlugin.getPlugin().getConfig().getBoolean("auto-quarantine");
         }
     }
@@ -157,6 +160,9 @@ public class JailAPI {
         	return false;
         } else {
             Player playerObject = Bukkit.getPlayer(player);
+            if(playerObject.isOp()) {
+            	return false;
+            }
             if(playerObject.hasPermission("jailr.frozen")) {
             	return true;
             }
