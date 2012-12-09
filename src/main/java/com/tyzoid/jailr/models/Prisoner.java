@@ -57,14 +57,15 @@ public class Prisoner extends Model {
                 try {
                     if (!this.saved) {
                         this.conn = DatabaseCommon.getConnection();
-                        this.pst = this.conn.prepareStatement("INSERT INTO " + this.tableName + " (created_time, sentence_time, served_time, reason, jailer, usergroup, inventory) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                        this.pst.setInt(1, this.created_time);
-                        this.pst.setInt(2, this.sentence_time);
-                        this.pst.setInt(3, this.served_time);
-                        this.pst.setString(4, this.reason);
-                        this.pst.setString(5, this.jailer);
-                        this.pst.setString(6, this.usergroup);
-                        this.pst.setString(7, this.inventory);
+                        this.pst = this.conn.prepareStatement("INSERT INTO " + this.tableName + " (player, created_time, sentence_time, served_time, reason, jailer, usergroup, inventory) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                        this.pst.setString(1, this.player);
+                        this.pst.setInt(2, this.created_time);
+                        this.pst.setInt(3, this.sentence_time);
+                        this.pst.setInt(4, this.served_time);
+                        this.pst.setString(5, this.reason);
+                        this.pst.setString(6, this.jailer);
+                        this.pst.setString(7, this.usergroup);
+                        this.pst.setString(8, this.inventory);
 
                         this.pst.executeUpdate();
 
