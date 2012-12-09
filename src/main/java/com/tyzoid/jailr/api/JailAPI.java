@@ -151,7 +151,7 @@ public class JailAPI {
      */
     public static boolean isFrozen(String player) {
         if (Bukkit.getPlayer(player) == null) {
-        	if(isJailed(player)) {
+        	if(isJailed(player) && JailrPlugin.getPlugin().getConfig().getBoolean("auto-freeze")) {
             	return true;
             }
         	return false;
@@ -160,7 +160,7 @@ public class JailAPI {
             if(playerObject.hasPermission("jailr.frozen")) {
             	return true;
             }
-            if(isJailed(player)) {
+            if(isJailed(player) && JailrPlugin.getPlugin().getConfig().getBoolean("auto-freeze")) {
             	return true;
             }
             return false;
