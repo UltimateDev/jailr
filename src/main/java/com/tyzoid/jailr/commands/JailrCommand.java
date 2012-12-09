@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import com.tyzoid.jailr.api.JailAPI;
 
 import java.lang.String;
+import java.util.ArrayList;
 
 public class JailrCommand {
     public static boolean issue(IssuedCommand cmd) {
@@ -20,7 +21,7 @@ public class JailrCommand {
             else if (cmd.getArgs()[0].equalsIgnoreCase("about"))
                 about(cmd);
             else if (cmd.getArgs()[0].equalsIgnoreCase("list"))
-                unimplemented(cmd);
+                listJailed(cmd);
             else if (cmd.getArgs()[0].equalsIgnoreCase("jail"))
             	wrongArgs(cmd);
             else if (cmd.getArgs()[0].equalsIgnoreCase("unjail"))
@@ -29,41 +30,59 @@ public class JailrCommand {
                 wrongArgs(cmd);
             else
                 help(cmd); // Also triggers on /jailr help
+    		return true;
     	}
     	if(cmd.argExists(0) && cmd.argExists(1)) {
     		if (cmd.getArgs()[0].equalsIgnoreCase("jail"))
-                jailPlayer(cmd, cmd.getArgs()[1]);
+                jailPlayer(cmd, cmd.getArgs()[1], null);
             else if (cmd.getArgs()[0].equalsIgnoreCase("unjail"))
             	unjailPlayer(cmd, cmd.getArgs()[1]);
             else if (cmd.getArgs()[0].equalsIgnoreCase("jailtime"))
                 unimplemented(cmd);
             else
-            	help(cmd); // Also triggers on /jailr help
-    	}else
+            	help(cmd); // Also triggers on /jailr help\
+    		return true;
+    	}
+    	if(cmd.getArgs().length > 1) {
+    		if(cmd.getArgs()[0].equalsIgnoreCase("jail")) {
+    			jailPlayer(cmd, cmd.getArgs()[1], JailAPI.formatArgs(cmd.getArgs()));
+    		}else
+    			help(cmd);
+    	}
     		help(cmd);
         return true;
     }
     
-    private static void jailPlayer(IssuedCommand cmd, String prisoner) {
+    private static void jailPlayer(IssuedCommand cmd, String prisoner, String reason) {
     	if(!JailAPI.isJailed(prisoner)) {
-    		JailAPI.jailPlayer(prisoner);
-    		Messenger.sendMessage(cmd.getSender(), "That player is now jailed!");
+    		if(prisoner.equalsIgnoreCase(cmd.getSender().getName())) {
+    			JailAPI.jailPlayer(prisoner, cmd.getSender().getName(), reason, "usergroup", "InventorySerializer");
+    			Messenger.sendMessage(cmd.getSender(), "That player is now jailed!");
+    		}else{
+    			Messenger.sendMessage(cmd.getSender(), "You cannot jail yourself :p.");
+    		}
     	}else{
     		Messenger.sendMessage(cmd.getSender(), "That player is already jailed!");
     	}
     }
     
     private static void unjailPlayer(IssuedCommand cmd, String prisoner) {
-    	if(!JailAPI.isJailed(prisoner)) {
-    		JailAPI.unjailPlayer(prisoner);
-    		Messenger.sendMessage(cmd.getSender(), "That player is now unjailed!");
+    	if(JailAPI.isJailed(prisoner)) {
+    		if(prisoner.equalsIgnoreCase(cmd.getSender().getName())) {
+    			JailAPI.unjailPlayer(prisoner);
+        		Messenger.sendMessage(cmd.getSender(), "That player is now unjailed!");
+    		}else{
+    			Messenger.sendMessage(cmd.getSender(), "You cannot unjail yourself :p.");
+    		}
     	}else{
     		Messenger.sendMessage(cmd.getSender(), "That player is not jailed!");
     	}
     }
     
     private static void listJailed(IssuedCommand cmd) {
-    	
+    	ArrayList<String> pri = JailAPI.getJailMates();
+    	Messenger.sendMessage(cmd.getSender(), pri.size() != 0 ? "This is a list of all the prisoners: " 
+    			+ pri.toString().replace("[", "").replace("]", "") : "There are no prisoners at the moment.");
     }
     
     // The string prisoner is the prisoner being checked for the time left.
