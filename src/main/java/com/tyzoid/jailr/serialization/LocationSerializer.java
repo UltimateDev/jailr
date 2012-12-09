@@ -33,10 +33,10 @@ public class LocationSerializer {
 
     public Location getLocation() {
         String[] splitLocation = this.string.split(",");
-        String world = splitLocation[3];
-        double x = Double.parseDouble(splitLocation[0]);
-        double y = Double.parseDouble(splitLocation[1]);
-        double z = Double.parseDouble(splitLocation[2]);
+        String world = splitLocation[0];
+        double x = Double.parseDouble(splitLocation[1]);
+        double y = Double.parseDouble(splitLocation[2]);
+        double z = Double.parseDouble(splitLocation[3]);
         float yaw = Float.parseFloat(splitLocation[4]);
         float pitch = Float.parseFloat(splitLocation[5]);
 
