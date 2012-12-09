@@ -8,6 +8,8 @@ import com.tyzoid.jailr.models.Meta;
 import com.tyzoid.jailr.models.Prisoner;
 import com.tyzoid.jailr.serialization.LocationSerializer;
 import com.tyzoid.jailr.util.Log;
+import com.tyzoid.jailr.util.Messenger;
+import com.tyzoid.jailr.util.Time;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -149,26 +151,45 @@ public class JailAPI {
      */
     public static boolean isFrozen(String player) {
         if (Bukkit.getPlayer(player) == null) {
-            return isJailed(player) && JailrPlugin.getPlugin().getConfig().getBoolean("auto-freeze");
+        	if(isJailed(player)) {
+            	return true;
+            }
+        	return false;
         } else {
             Player playerObject = Bukkit.getPlayer(player);
-            return playerObject.hasPermission("jailr.frozen") || isJailed(player) && JailrPlugin.getPlugin().getConfig().getBoolean("auto-freeze");
+            if(playerObject.hasPermission("jailr.frozen")) {
+            	return true;
+            }
+            if(isJailed(player)) {
+            	return true;
+            }
+            return false;
         }
     }
 
     //TODO Implement jailPlayer | this is called after isJailed() is called and it is returned false | This jails a player
-    public static void jailPlayer(String name) {
-    	Meta jailPlayer = new Meta("Prisoner", name);
+    public static void jailPlayer(String name, String jailr, String reason, String usergroup, String inventory) {
+    	Prisoner jailPlayer = new Prisoner(Time.getTime(), name, 0, 0, reason != null ? reason : "No reason specified", jailr, "usergroup", "inventory");
         jailPlayer.save();
-        Player player = Bukkit.getServer().getPlayer(name);
-        player.teleport(JailAPI.getJailPoint());
+        if(Bukkit.getServer().getPlayer(name) != null) {
+        	Player player = Bukkit.getServer().getPlayer(name);
+        	player.teleport(JailAPI.getJailPoint());
+        }
     }
 
     //TODO Implement unjailPlayer | this is called after isJailed() is called and it is returned true | This unjails a player
     public static void unjailPlayer(String name) {
     	Prisoner.removeWhere("player='"+name+"'");
-    	 Player player = Bukkit.getServer().getPlayer(name);
-         player.teleport(JailAPI.getUnJailPoint());
+    	Player player = Bukkit.getServer().getPlayer(name);
+        player.teleport(JailAPI.getUnJailPoint());
+    }
+    
+    public static String formatArgs(String[] args) {
+    	StringBuilder sb = new StringBuilder();
+    	for (int i = 2; i < args.length; i++){
+    		sb.append(args[i]).append(" ");
+    	}
+    	return sb.toString().trim();
     }
 
     /**
@@ -181,8 +202,15 @@ public class JailAPI {
      * currently jailed or not.
      */
     public static boolean isJailed(String player) {
-    	List<Prisoner> matches = Prisoner.selectWhere("player='player'");
-        return matches.size() > 0;
+    	List<Prisoner> matches = Prisoner.selectAll();
+	    for(Prisoner pri : matches) {
+	    	if(pri.getPlayer() != null) {
+	    		if(pri.getPlayer().equalsIgnoreCase(player)) {
+		    		return true;
+		    	}
+	    	}
+	    }
+        return false;
     }
 
     // TODO Implement getRemainingJailTime | this is called after isJailed() is called and it is returned true |void needs to be changed to appropriate variable
@@ -192,7 +220,11 @@ public class JailAPI {
 
     //TODO Implement getJailMates | Returns a list of all jailed players by name to list them on comamnd
     public static ArrayList<String> getJailMates() {
-    	
-    	return null;
+    	ArrayList<String> d = new ArrayList<String>();
+    	ArrayList<Prisoner> pri = (ArrayList<Prisoner>)Prisoner.selectAll();
+    	for(Prisoner prisoner : pri) {
+    		d.add(prisoner.getPlayer());
+    	}
+    	return d;
     }
 }
