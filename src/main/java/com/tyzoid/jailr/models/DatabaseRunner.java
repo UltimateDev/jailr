@@ -116,11 +116,8 @@ public class DatabaseRunner {
                                 "served_time INT," +
                                 "reason VARCHAR(45)," +
                                 "jailer VARCHAR(30)," +
-                                "inventory CLOB," +
-                                "x INT," +
-                                "y INT," +
-                                "z INT," +
-                                "world VARCHAR(20)" +
+                                "usergroup VARCHAR(30)," +
+                                "inventory TEXT" +
                                 ")");
 
                         System.out.println("Done!");
