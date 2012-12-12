@@ -3,6 +3,8 @@ package com.tyzoid.jailr.commands;
 import com.tyzoid.jailr.JailrPlugin;
 import com.tyzoid.jailr.commands.IssuedCommand;
 import com.tyzoid.jailr.util.Messenger;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -28,8 +30,17 @@ public class JailrCommand {
             	wrongArgs(cmd);
             else if (cmd.getArgs()[0].equalsIgnoreCase("jailtime"))
                 wrongArgs(cmd);
+            else if (cmd.getArgs()[0].equalsIgnoreCase("reason"))
+            	wrongArgs(cmd);
             else
                 help(cmd); // Also triggers on /jailr help
+    		return true;
+    	}
+    	if(cmd.getArgs().length > 2 && cmd.getArgs()[0].equalsIgnoreCase("jail")) {
+    		if(cmd.getArgs()[0].equalsIgnoreCase("jail")) {
+    			jailPlayer(cmd, cmd.getArgs()[1], JailAPI.formatArgs(2, cmd.getArgs()));
+    		}else
+    			help(cmd);
     		return true;
     	}
     	if(cmd.argExists(0) && cmd.argExists(1)) {
@@ -39,18 +50,26 @@ public class JailrCommand {
             	unjailPlayer(cmd, cmd.getArgs()[1]);
             else if (cmd.getArgs()[0].equalsIgnoreCase("jailtime"))
                 unimplemented(cmd);
+            else if (cmd.getArgs()[0].equalsIgnoreCase("reason"))
+            	getReason(cmd, cmd.getArgs()[1]);
             else
             	help(cmd); // Also triggers on /jailr help\
     		return true;
     	}
-    	if(cmd.getArgs().length > 1) {
-    		if(cmd.getArgs()[0].equalsIgnoreCase("jail")) {
-    			jailPlayer(cmd, cmd.getArgs()[1], JailAPI.formatArgs(cmd.getArgs()));
-    		}else
-    			help(cmd);
-    	}
     		help(cmd);
         return true;
+    }
+    
+    private static void getReason(IssuedCommand cmd, String player) {
+    	if(Bukkit.getOfflinePlayer(player) != null) {
+    		if(JailAPI.isJailed(player)) {
+    			Messenger.sendMessage(cmd.getSender(), "The reason why " + player + " was jailed: " + JailAPI.getReasonJailed(player));
+    		}else{
+    			Messenger.sendMessage(cmd.getSender(), "That player is not jailed.");
+    		}
+    	}else{
+			Messenger.sendMessage(cmd.getSender(), "That player does not exist.");
+    	}
     }
     
     private static void jailPlayer(IssuedCommand cmd, String prisoner, String reason) {
@@ -140,6 +159,8 @@ public class JailrCommand {
             Messenger.sendMessage(cmd.getSender(), bull + "/jailr setunjail - Sets the jail removal point.", false);
         if (cmd.getSender().hasPermission("jailr.list"))
             Messenger.sendMessage(cmd.getSender(), bull + "/jailr list - List prisoners", false);
+        if (cmd.getSender().hasPermission("jailr.getreason"))
+        	Messenger.sendMessage(cmd.getSender(), bull + "/jailr reason <player> - Get the reason why a player was jailed", false);
         if (cmd.getSender().hasPermission("jailr.list"))
             Messenger.sendMessage(cmd.getSender(), bull + "/jailr jailtime <player> - Check the remaining time of a prisoner", false);
     }
