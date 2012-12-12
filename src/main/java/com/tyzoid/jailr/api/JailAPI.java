@@ -8,8 +8,8 @@ import com.tyzoid.jailr.models.Meta;
 import com.tyzoid.jailr.models.Prisoner;
 import com.tyzoid.jailr.serialization.LocationSerializer;
 import com.tyzoid.jailr.util.Log;
-import com.tyzoid.jailr.util.Messenger;
 import com.tyzoid.jailr.util.Time;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -192,9 +192,14 @@ public class JailAPI {
     	}
     }
     
-    public static String formatArgs(String[] args) {
+    public static String getReasonJailed(String name) {
+    	List<Prisoner> matches = Prisoner.selectWhere("player='"+name+"'");
+    	return matches.get(0).getReason();
+    }
+    
+    public static String formatArgs(int startArg, String[] args) {
     	StringBuilder sb = new StringBuilder();
-    	for (int i = 2; i < args.length; i++){
+    	for (int i = startArg; i < args.length; i++){
     		sb.append(args[i]).append(" ");
     	}
     	return sb.toString().trim();
@@ -222,7 +227,7 @@ public class JailAPI {
     }
 
     // TODO Implement getRemainingJailTime | this is called after isJailed() is called and it is returned true |void needs to be changed to appropriate variable
-    public static void getRemainingJailTime() {
+    public static void getRemainingJailTime(String name) {
     	
     }
 
