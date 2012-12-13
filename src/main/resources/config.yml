@@ -4,6 +4,10 @@
 # Here you can set what permissions group you want jailed players to be set to:
 group: jailed
 
+# Here you can set whether or not the plugin will broadcast a message
+# when someone is jailed or unjailed.
+broadcast: true
+
 # Here you can set if jailed players are automatically quarantined. Quarantined status means that the player can move,
 # but the player cannot interact with the world (open chests, break blocks, etc.) All players with the permission
 # jailr.quarantined are already quarantined.
