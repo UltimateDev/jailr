@@ -8,6 +8,7 @@ import com.tyzoid.jailr.models.Meta;
 import com.tyzoid.jailr.models.Prisoner;
 import com.tyzoid.jailr.serialization.LocationSerializer;
 import com.tyzoid.jailr.util.Log;
+import com.tyzoid.jailr.util.Messenger;
 import com.tyzoid.jailr.util.Time;
 
 import org.bukkit.Bukkit;
@@ -178,7 +179,9 @@ public class JailAPI {
     	Prisoner jailPlayer = new Prisoner(Time.getTime(), name, 0, 0, reason != null ? reason : "No reason specified", jailr, "usergroup", "inventory");
         jailPlayer.save();
         if(Bukkit.getServer().getPlayer(name) != null) {
+        	if(JailrPlugin.getPlugin().getConfig().getBoolean("broadcast") == true)Messenger.broadcastMessage(name + " was jailed for " + reason);
         	Player player = Bukkit.getServer().getPlayer(name);
+        	Messenger.sendMessage(player, "You have been unjailed");
         	player.teleport(JailAPI.getJailPoint());
         }
     }
@@ -187,8 +190,10 @@ public class JailAPI {
     public static void unjailPlayer(String name) {
     	Prisoner.removeWhere("player='"+name+"'");
     	if(Bukkit.getServer().getPlayer(name) != null) {
+    		if(JailrPlugin.getPlugin().getConfig().getBoolean("broadcast") == true)Messenger.broadcastMessage(name + " was unjailed");
     		Player player = Bukkit.getServer().getPlayer(name);
     		player.teleport(JailAPI.getUnJailPoint());
+    		Messenger.sendMessage(player, "You have been jailed");
     	}
     }
     
