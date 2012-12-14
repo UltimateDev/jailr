@@ -232,8 +232,29 @@ public class JailAPI {
     }
 
     // TODO Implement getRemainingJailTime | this is called after isJailed() is called and it is returned true |void needs to be changed to appropriate variable
-    public static void getRemainingJailTime(String name) {
-    	
+    public static String getRemainingJailTime(String name) {
+    	List<Prisoner> matches = Prisoner.selectWhere("player='"+name+"'");
+    	int timeLeft = matches.get(0).getSentence_time() - matches.get(0).getServed_time();
+    	int hours = timeLeft / 3600, remainder = timeLeft % 3600, minutes = remainder / 60, seconds = remainder % 60;
+    	StringBuilder time = new StringBuilder();
+    	time.append("You have ");
+    	if(hours != 0) {
+    		time.append(hours + " hour(s)");
+    	}
+    	if(minutes != 0) {
+    		if(hours != 0) {
+    			time.append(" and " + minutes + " minute(s)");
+    		}else time.append(minutes + "minute(s)");
+    	}
+    	if(seconds != 0) {
+    		if(hours != 0) {
+    			if(minutes != 0) {
+    				time.append(" and " + seconds + " second(s)");
+    			}else time.append(seconds + " seconds(s)");
+    		}else time.append(seconds + " seconds(s)");
+    	}
+    	time.append(" left.");
+    	return time.toString();
     }
 
     //TODO Implement getJailMates | Returns a list of all jailed players by name to list them on comamnd
