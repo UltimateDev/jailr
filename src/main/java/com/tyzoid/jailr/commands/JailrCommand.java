@@ -1,7 +1,6 @@
 package com.tyzoid.jailr.commands;
 
 import com.tyzoid.jailr.JailrPlugin;
-import com.tyzoid.jailr.commands.IssuedCommand;
 import com.tyzoid.jailr.util.Messenger;
 
 import org.bukkit.Bukkit;
@@ -9,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.tyzoid.jailr.api.JailAPI;
+import com.tyzoid.jailr.commands.IssuedCommand;
 
 import java.lang.String;
 import java.util.ArrayList;
@@ -166,7 +166,7 @@ public class JailrCommand {
     }
 
     private static void about(IssuedCommand cmd) {
-        Messenger.sendMessage(cmd.getSender(), "jailr v" + JailrPlugin.getPlugin().getDescription().getVersion() + " by goldblattster and Tyzoid");
+        Messenger.sendMessage(cmd.getSender(), "jailr v" + JailrPlugin.getPlugin().getDescription().getVersion() + " by goldblattster, messageofdeath, and Tyzoid");
         Messenger.sendMessage(cmd.getSender(), "jailr is licensed under the BSD 2 clause license. Go to town.");
     }
 }
